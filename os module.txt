@@ -1,0 +1,37 @@
+import os
+
+def csv_files_filter(s_path):
+    csv_files = [file for file in os.listdir(s_path) if file.endswith(".csv")]
+    return csv_files
+
+def source_to_destination(spath,filname,dpath):
+    with open(spath) as fp:
+        data =  fp.read()
+    copy_to_destination(data,filname,spath,dpath)
+    return True
+
+def copy_to_destination(data,filename,spath,dpath):
+    with open(r"{}\{}".format(dpath,filename),"w") as fp:
+        fp.write(data)
+    remove_filefrom_source(spath)
+    return True
+
+def remove_filefrom_source(spath):
+    os.remove(r"{}".format(spath))
+    return True
+
+def main():
+    source_path = 'source'
+    destination_path = 'destination'
+    csv_files_list = csv_files_filter(source_path)
+    for file in csv_files_list:
+        source_to_destination(r"{}\{}".format(source_path,file),file,destination_path)
+    print("all file moved to Destionation")
+
+
+
+if __name__=='__main__':
+    main()
+
+
+
